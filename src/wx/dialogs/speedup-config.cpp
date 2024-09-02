@@ -128,10 +128,11 @@ void SpeedupConfig::SetSpeedupThrottle(wxCommandEvent& evt)
         frame_skip_cb_->SetValue(prev_frame_skip_cb_);
         frame_skip_cb_->Enable();
     } else { // val > throttle_max
-        if (val > prev_throttle_spin_)
-            val += 100;
-
-        val = std::floor((double)val / 100) * 100;
+        if (val > prev_throttle_spin_) {
+            val = std::ceil((double)val / 100) * 100;
+        } else {
+            val = std::floor((double)val / 100) * 100;
+        }
 
         uint32_t max = speedup_throttle_spin_->GetMax();
 
